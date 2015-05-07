@@ -1,23 +1,23 @@
+from base64 import b64encode
 from collections import deque
 from datetime import datetime
+from os import makedirs
+from os.path import isfile, isdir
 from queue import Queue
 from random import random
-import re
-from signal import signal
-from signal import SIGINT
+from re import compile as regex, IGNORECASE
+from signal import signal, SIGINT
 from sqlite3 import connect
 from sys import argv
 from threading import Thread
 from time import sleep
 from urllib.request import urlopen
-from os.path import isfile, isdir
-from os import makedirs
-from base64 import b64encode
 
 
 class SetQueue(Queue):
-    def _init(self, maxsize):
-        self.queue = deque()
+    def __init__(self, initial=[]):
+        super().__init__()
+        self.queue = deque(initial)
 
     def _put(self, item):
         if item not in self.queue:
@@ -30,8 +30,7 @@ work = True
 process = SetQueue()
 inserts = Queue()
 links = SetQueue()
-anchor_re = re.compile(r'<a.+href="([^"]+)".*>.+</a>', re.IGNORECASE)
-digits_re = re.compile(r'\d')
+anchor_re = regex(r'<a.+href="([^"]+)".*>.+</a>', IGNORECASE)
 host = argv[1]
 db = connect(host + '.db')
 root = 'http://%s/' % host
