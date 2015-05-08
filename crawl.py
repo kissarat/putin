@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
+
 from binascii import crc32
 from collections import deque
 from datetime import datetime
 from os import makedirs
 from os.path import isfile, isdir
-from queue import Queue
 from random import random, choice
 from re import compile as regex, IGNORECASE
 from signal import signal, SIGINT
@@ -12,7 +13,6 @@ from threading import Thread
 from time import sleep
 from urllib.error import HTTPError
 from urllib.request import urlopen, Request
-from piston_mini_client import SocketError
 
 with open('browsers', encoding='utf-8') as f:
     browsers = f.read().split('\n')
@@ -21,7 +21,7 @@ with open('browsers', encoding='utf-8') as f:
 class Crawler(Thread):
     work = False
     threads = []
-    threads_number = 36
+    threads_number = 12
     host = argv[1]
     root = 'http://%s/' % host
     archive = 'archive/' + host + '/'
@@ -33,7 +33,7 @@ class Crawler(Thread):
         Crawler.work = True
         for i in range(Crawler.threads_number):
             Crawler.threads.append(Crawler())
-        Crawler.schedule('')
+        Crawler.schedule(argv[2] if 3 == len(argv) else '')
         for crawler in Crawler.threads:
             crawler.start()
             sleep(random() * 4)
@@ -90,19 +90,17 @@ class Crawler(Thread):
 
         try:
             r = urlopen(Request(self.root + url, headers={'User-Agent': choice(browsers)}))
-        except SocketError as ex:
-            self.busy_wait += self.threads_number
-            log(str(ex))
-            return
         except HTTPError as ex:
             if 503 == ex.code:
-                self.busy_wait += self.threads_number
+                self.busy_wait += self.threads_number * 10
+                self.queue.appendleft(url)
                 log(str(ex))
             elif 404 == ex.code:
                 if not (url in self.list):
                     self.list.append(url)
+                    log('%s\t%s' % (ex, url))
             else:
-                log(str(ex))
+                log('%s\t%s' % (ex, url))
             return
 
         r = r.read().decode('utf-8')
@@ -113,7 +111,14 @@ class Crawler(Thread):
                 sharp = a.find('#')
                 if sharp >= 0:
                     a = a[sharp + 1:]
-                if a and a not in anchors:
+                if len(a) > 0 and a not in anchors:
+                    if '/' == a[0]:
+                        a = a[1:]
+                    ext = ext_re.search(url)
+                    if ext and ext.group(1) not in ['html', 'htm', 'txt']:
+                        continue
+                    if ignore_re.search(a):
+                        continue
                     self.schedule(a)
         self.list.append(url)
         count = len(self.list)
@@ -134,6 +139,7 @@ class Crawler(Thread):
         crc = crc32(url.encode('ascii'))
         crawler = Crawler.threads[crc % len(Crawler.threads)]
         if not (url in crawler.list or url in crawler.queue):
+            #print(url)
             crawler.queue.appendleft(url)
 
     def save(self):
@@ -158,18 +164,6 @@ class Crawler(Thread):
         for crawler in Crawler.threads:
             crawler.save()
 
-
-class SetQueue(Queue):
-    def __init__(self, initial):
-        super().__init__()
-        self.queue = deque(initial)
-
-    def _put(self, item):
-        self.queue.appendleft(item)
-
-    def _get(self):
-        return self.queue.pop()
-
 _log = open('log', 'w+', encoding='utf-8')
 
 
@@ -178,6 +172,8 @@ def log(string):
     _log.write(string + '\n')
 
 anchor_re = regex(r'<a.+href="([^"]+)".*>.+</a>', IGNORECASE)
+ext_re = regex(r"\.(\w+)\??.*$")
+ignore_re = regex(r"^(mailto|comment|search|page|\?q=|contest)")
 
 if not isdir(Crawler.archive):
     makedirs(Crawler.archive)
