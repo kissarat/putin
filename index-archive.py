@@ -27,7 +27,7 @@ def gen_headers():
 class Job(Thread):
     threads = []
     encoding = 'utf8'
-    threads_number = 100
+    threads_number = 4
     work = True
     lock = Lock()
     number = int(argv[2])
@@ -39,7 +39,7 @@ class Job(Thread):
     def decrement():
         with Job.lock:
             number = Job.number
-            Job.number -= 1
+            Job.number -= 8
         return number
 
     def run(self):
@@ -64,22 +64,22 @@ class Job(Thread):
                         print('#%s %s\t%s\t%s' % (number, loaded, saved, time))
                         loaded = 0
                         saved = 0
-                        sleep(random() * 24)
+                        # sleep(random() * 24)
                         start = datetime.now()
 
                 url = str(argv[1]) % number
-                with urlopen(Request(url, headers=gen_headers())) as r:
-                    r.read().decode(self.encoding, 'ignore')
+                # with urlopen(Request(url, headers=gen_headers())) as r:
+                #     r.read().decode(self.encoding, 'ignore')
                 loaded += 1
-                with urlopen(Request('http://archive.org/wayback/available?url=' + url, headers=wget)) as r:
-                    data = r.read().decode('utf8')
-                data = loads(data)
-                if 'closest' not in data['archived_snapshots']:
-                    with urlopen(Request('http://web.archive.org/save/' + url, headers=wget)) as r:
-                        r.read()
+                # with urlopen(Request('http://archive.org/wayback/available?url=' + url, headers=wget)) as r:
+                #     data = r.read().decode('utf8')
+                # data = loads(data)
+                # if 'closest' not in data['archived_snapshots']:
+                with urlopen(Request('http://web.archive.org/save/' + url, headers=wget)) as r:
+                    r.read()
                     saved += 1
             except HTTPError as ex:
-                if 502 == ex.code or 502 == ex.code:
+                if ex.code in [304, 502, 503]:
                     fails.appendleft(number)
                     print('URLError %s: %s' % (number, str(ex)))
                     sleep(random() * 4)

@@ -1,5 +1,6 @@
 .idea/
 archive/
+config/
 *.db
 log
 *.pyc
