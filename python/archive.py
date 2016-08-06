@@ -20,7 +20,7 @@ headers = {
 class Crawler(Thread):
     work = False
     threads = []
-    threads_number = 12
+    threads_number = 4
     host = argv[1]
     root = 'http://%s/' % host
     archive = 'archive/' + host + '/'

@@ -5,3 +5,6 @@ config/
 log
 *.pyc
 
+node_modules/
+package.json
+site/
