@@ -1,0 +1,7 @@
+{
+	"url": "http://cybersecurity.ru/hard/{number}.html",
+	"number": 117440,
+	"threads": 8,
+	"host": "localhost",
+	"port": 9001
+}

@@ -1,0 +1,6 @@
+{
+  "url": "https://snob.ru/selected/entry/{number}",
+  "number": 32000,
+  "threads": 16,
+  "port": 9001
+}

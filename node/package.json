@@ -1,0 +1,23 @@
+{
+  "name": "putin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "''",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kissarat/putin.git"
+  },
+  "author": "Taras Labiak <kissarat@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kissarat/putin/issues"
+  },
+  "homepage": "https://github.com/kissarat/putin#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "request": "^2.74.0"
+  }
+}
