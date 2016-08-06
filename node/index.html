@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archive.org Saver</title>
+    <style>
+        tbody {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        tr {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/about');
+        xhr.addEventListener('loadend', function () {
+            document.title = JSON.parse(xhr.responseText).url;
+        });
+        xhr.send(null);
+
+        addEventListener('load', function () {
+            const tbody = document.querySelector('tbody');
+            const stream = new EventSource(location.origin + '/stream');
+            stream.addEventListener('complete', function (e) {
+                var data = JSON.parse(e.data);
+                var message = [data.number, data.spend, data.status].join('</td><td>');
+                var div = document.createElement('tr');
+                if (data.status >= 400) {
+                    div.setAttribute('class', 'error');
+                }
+                div.innerHTML = '<td>' + message + '</td>';
+                tbody.appendChild(div);
+            });
+        });
+    </script>
+</head>
+<body>
+<table>
+    <tbody></tbody>
+</table>
+</body>
+</html>
