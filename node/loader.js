@@ -44,7 +44,7 @@ function save() {
     if (!config) {
         return;
     }
-    if (config.number > 0) {
+    if (config.number >= config.min) {
         const i = config.number--;
         let start = Date.now();
         _module.request(config.url.replace('{number}', i), i)
