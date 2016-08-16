@@ -1,11 +1,14 @@
 "use strict";
 
 require('colors');
-const request = require('request');
-const filename = `./site/${process.argv[process.argv.length - 1]}.json`;
+const site = process.argv[process.argv.length - 1];
+const _modulename = process.argv[process.argv.length - 2];
+const filename = `./site/${site}.json`;
+const _module = require(`./modules/${_modulename}`);
 var config = require(filename);
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 if ('number' === (typeof config.port) && !config.host) {
     config.host = 'localhost';
@@ -39,22 +42,18 @@ function save() {
     }
     if (config.number > 0) {
         const i = config.number--;
-        let url = 'http://web.archive.org/save/' + config.url.replace('{number}', i);
         let start = Date.now();
-        request(url, function (err, response, data) {
-            if (err) {
+        _module.request(config.url.replace('{number}', i), i)
+            .then(function (data) {
+                data.number = i;
+                data.spend = (Date.now() - start) / 1000;
+                show(data);
+                save();
+            })
+            .catch(function (err) {
                 console.error(err);
-            }
-            else {
-                let time = (Date.now() - start) / 1000;
-                show({
-                    status: response.statusCode,
-                    number: i,
-                    spend: time
-                });
-            }
-            save();
-        })
+                save();
+            });
     }
     else {
         process.exit();
@@ -62,6 +61,10 @@ function save() {
 }
 
 function run() {
+    if ('function' === typeof _module.setup) {
+        config.urlObject = url.parse(config.url);
+        _module.setup(config);
+    }
     for (var i = 0; i < config.threads; i++) {
         setTimeout(save, i * 1000);
     }

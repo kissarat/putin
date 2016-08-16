@@ -1,0 +1,21 @@
+{
+	"url": "http://n7.radio-t.com/rtfiles/rt_podcast{number}.mp3",
+	"number": 502,
+	"threads": 4,
+	"ext": "mp3",
+	"urlObject": {
+		"protocol": "http:",
+		"slashes": true,
+		"auth": null,
+		"host": "n7.radio-t.com",
+		"port": null,
+		"hostname": "n7.radio-t.com",
+		"hash": null,
+		"search": null,
+		"query": null,
+		"pathname": "/rtfiles/rt_podcast%7Bnumber%7D.mp3",
+		"path": "/rtfiles/rt_podcast%7Bnumber%7D.mp3",
+		"href": "http://n7.radio-t.com/rtfiles/rt_podcast%7Bnumber%7D.mp3"
+	},
+	"dirname": "/Users/kissarat/src/putin/node/modules/../../download/n7.radio-t.com"
+}
