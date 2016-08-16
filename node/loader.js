@@ -14,6 +14,10 @@ if ('number' === (typeof config.port) && !config.host) {
     config.host = 'localhost';
 }
 
+if ('number' !== typeof config.min) {
+    config.min = 1;
+}
+
 var show = function (data) {
     if (data instanceof Error) {
         console.error(err);
