@@ -1,9 +1,24 @@
 {
-  "url": "http://n7.radio-t.com/rtfiles/rt_podcast{number}.mp3",
-  "number": 508,
-  "min": 331,
-  "threads": 4,
-  "port": 9001,
-  "ext": "mp3",
-  "dirname": "/Users/kissarat/src/putin/node/modules/../../download/n7.radio-t.com"
+	"url": "http://n{thread}.radio-t.com/rtfiles/rt_podcast{number}.mp3",
+	"name": "radio-t",
+	"number": 99,
+	"threads": 7,
+	"ext": "mp3",
+	"host": "localhost",
+	"min": 100,
+	"urlObject": {
+		"protocol": "http:",
+		"slashes": true,
+		"auth": null,
+		"host": "n",
+		"port": null,
+		"hostname": "n",
+		"hash": null,
+		"search": null,
+		"query": null,
+		"pathname": "%7Bthread%7D.radio-t.com/rtfiles/rt_podcast%7Bnumber%7D.mp3",
+		"path": "%7Bthread%7D.radio-t.com/rtfiles/rt_podcast%7Bnumber%7D.mp3",
+		"href": "http://n/%7Bthread%7D.radio-t.com/rtfiles/rt_podcast%7Bnumber%7D.mp3"
+	},
+	"dirname": "/Users/taras/github/putin/node/modules/../../download/radio-t"
 }

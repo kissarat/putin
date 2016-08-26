@@ -18,9 +18,22 @@ if ('number' !== typeof config.min) {
     config.min = 1;
 }
 
+const last = {};
+
 var show = function (data) {
     if (data instanceof Error) {
-        console.error(err);
+        console.error(data);
+    }
+    else if ('number' === typeof data.progress) {
+        if (!last[data.number]) {
+            last[data.number] = Date.now();
+        }
+        if (Date.now() - last[data.number] > 2000) {
+            const progress = new Array(Math.round(100 * data.progress / data.total)).join('#');
+            const speed = Math.round((data.progress / 1024) / (data.spend / 1000));
+            console.log(`${data.number} ${speed}\t${progress}`);
+            last[data.number] = Date.now();
+        }
     }
     else {
         if (data.status >= 500) {
@@ -40,23 +53,31 @@ var show = function (data) {
     }
 };
 
-function save() {
+function save(thread) {
     if (!config) {
         return;
     }
     if (config.number >= config.min) {
         const i = config.number--;
-        let start = Date.now();
-        _module.request(config.url.replace('{number}', i), i)
+        const start = Date.now();
+        const url = config.url
+            .replace('{number}', i)
+            .replace('{thread}', thread + 1);
+        const cb = function (data) {
+            data.number = i;
+            data.spend = Date.now() - start;
+            show(data)
+        };
+        _module.request(url, i, cb)
             .then(function (data) {
                 data.number = i;
                 data.spend = (Date.now() - start) / 1000;
                 show(data);
-                save();
+                save(thread);
             })
             .catch(function (err) {
                 console.error(err);
-                save();
+                save(thread);
             });
     }
     else {
@@ -70,7 +91,7 @@ function run() {
         _module.setup(config);
     }
     for (var i = 0; i < config.threads; i++) {
-        setTimeout(save, i * 1000);
+        setTimeout(save, i * 1000, i);
     }
 }
 
