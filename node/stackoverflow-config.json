@@ -1,0 +1,9 @@
+{
+	"number": 4729,
+	"queue": 100,
+	"threads": {
+		"max": 48,
+		"delta": 5,
+		"delay": 10
+	}
+}
