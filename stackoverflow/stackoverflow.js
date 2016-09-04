@@ -1,7 +1,7 @@
 const jsdom = require('jsdom');
 const request = require('request');
 const _ = require('underscore');
-const Store = require('./store');
+const Store = require('../store');
 
 const store = new Store(__filename, 30000);
 store.setDefaults({
