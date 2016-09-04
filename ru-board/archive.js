@@ -20,8 +20,8 @@ query('SELECT path FROM url ORDER BY random() DESC')
       }
     }
 
-    for (let i = 0; i < 48; i++) {
-      setTimeout(archive, i * 250);
+    for (let i = 0; i < 6; i++) {
+      setTimeout(archive, i * 1000);
     }
   })
   .catch(function (err) {

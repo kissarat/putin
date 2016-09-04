@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/kissarat/putin#readme",
   "dependencies": {
-    "archive.is": "0.0.2",
+    "archive.is": "git+ssh://git@github.com:kissarat/archive.is.git",
     "colors": "^1.1.2",
     "deepmerge": "^0.2.10",
     "iconv": "^2.2.1",
