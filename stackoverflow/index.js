@@ -3,7 +3,7 @@ const request = require('request');
 const _ = require('underscore');
 const Store = require('../store');
 
-const store = new Store(__filename, 30000);
+const store = new Store(__dirname + '/config', 30000);
 store.setDefaults({
   number: 0,
   queue: 100,
