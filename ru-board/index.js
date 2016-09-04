@@ -1,40 +1,8 @@
 const url = require('url');
 const jsdom = require('jsdom');
-const http = require('http');
-const pg = require('pg');
-const qs = require('querystring');
 const constants = require('../list');
 const _ = require('underscore');
-
-const UNIQUE = '23505';
-
-const pool = new pg.Pool({
-  user: 'crawl',
-  password: 'crawl',
-  database: 'crawl'
-});
-
-function query(sql, params) {
-  return new Promise(function (resolve, reject) {
-    pool.connect(function (err, client, done) {
-      if (err) {
-        reject(err);
-        console.error(err);
-      }
-      else {
-        client.query(sql, params, function (err, result) {
-          done();
-          if (err) {
-            reject(err);
-          }
-          else {
-            resolve(result.rows);
-          }
-        })
-      }
-    })
-  });
-}
+const query = require('./db').query;
 
 const tasks = [];
 
@@ -85,7 +53,7 @@ function crawl(path) {
             });
           });
           schedule(function () {
-            return query('SELECT * FROM url_count WHERE crawled IS NULL ORDER BY priority DESC, len ASC, count DESC, time ASC LIMIT 1')
+            return query('SELECT * FROM url_count WHERE crawled IS NULL ORDER BY RANDOM() LIMIT 1')
               .then(function (urls) {
                 if (urls.length > 0) {
                   const path = urls[0].path;
