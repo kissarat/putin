@@ -1,14 +1,14 @@
 const query = require('./db').query;
 const archive_is = require('archive.is');
 
-query('SELECT path FROM url ORDER BY priority DESC, id DESC')
+query('SELECT path FROM url_count ORDER BY priority DESC, len ASC, count ASC, crawled ASC, time ASC')
   .then(function (rows) {
     const urls = rows.map(url => url.path);
 
     function archive() {
       const url = urls.pop();
       if (url) {
-        archive_is.save('http://forum.ru-board.com/' + url)
+        archive_is.save('http://archive.org/save/http://forum.ru-board.com/' + url)
           .then(function () {
             console.log(url);
             archive()
@@ -20,7 +20,7 @@ query('SELECT path FROM url ORDER BY priority DESC, id DESC')
       }
     }
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 48; i++) {
       setTimeout(archive, i * 1000);
     }
   })

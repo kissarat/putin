@@ -4,6 +4,8 @@ const constants = require('../list');
 const _ = require('underscore');
 const query = require('./db').query;
 
+const except = constants.load(__dirname + '/except.list');
+
 const tasks = [];
 
 function run() {
@@ -41,7 +43,7 @@ function crawl(path) {
           const urls = Array
             .from(document.querySelectorAll('a[href]'))
             .map(a => url.parse(a.getAttribute('href')))
-            .filter(url => /^forum=/.test(url.query) && !(url.hostname || /member=/.exec(url.query)));
+            .filter(_url => !except.some(pattern => 0 === _url.pathname.indexOf(pattern)));
           _.uniq(urls)
             .forEach(function (_url) {
             schedule(function () {
