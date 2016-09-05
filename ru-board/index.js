@@ -53,7 +53,7 @@ function crawl(path) {
             });
           });
           schedule(function () {
-            return query('SELECT * FROM url_count WHERE crawled IS NULL ORDER BY RANDOM() LIMIT 1')
+            return query('SELECT * FROM url WHERE crawled IS NULL ORDER BY priority DESC, RANDOM() LIMIT 1')
               .then(function (urls) {
                 if (urls.length > 0) {
                   const path = urls[0].path;

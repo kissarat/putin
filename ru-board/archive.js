@@ -1,7 +1,7 @@
 const query = require('./db').query;
 const archive_is = require('archive.is');
 
-query('SELECT path FROM url ORDER BY random() DESC')
+query('SELECT path FROM url ORDER BY id DESC')
   .then(function (rows) {
     const urls = rows.map(url => url.path);
 
