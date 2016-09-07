@@ -17,6 +17,8 @@ const headers = {
   referer: 'http://antiukrop.su/to_send_data'
 };
 
+var count = 0;
+
 function imageFileName(i) {
   return `/tmp/putin-${i}.jpg`;
 }
@@ -126,12 +128,22 @@ function send() {
     })
 }
 
+setInterval(function () {
+  console.log(count + ' # ', new Date().toLocaleString());
+  count = 0;
+}, 60000);
+
 function loop() {
   send()
     .then(function (res) {
       if (302 === res.statusCode) {
-        console.log(res.statusCode, new Date());
+        count++;
+        // console.log(res.statusCode);
         loop()
+      }
+      else if (200 === res.statusCode) {
+        // console.log(res.statusCode);
+        setTimeout(loop, 10000)
       }
       else {
         console.log(res.statusCode);
