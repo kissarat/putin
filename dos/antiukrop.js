@@ -129,11 +129,12 @@ function send() {
 function loop() {
   send()
     .then(function (res) {
-      console.log(res.statusCode);
       if (302 === res.statusCode) {
+        console.log(res.statusCode, new Date());
         loop()
       }
       else {
+        console.log(res.statusCode);
         setTimeout(loop, 10000)
       }
     })
