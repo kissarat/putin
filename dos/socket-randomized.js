@@ -3,8 +3,9 @@ const url = require('url');
 const dns = require('dns');
 const _ = require('underscore');
 
+const threadsCount = +process.argv[process.argv.length - 3];
 const _url = url.parse(process.argv[process.argv.length - 2]);
-const maxNumber = +process.argv[process.argv.length - 2];
+const maxNumber = +process.argv[process.argv.length - 1];
 var requestsCount = 0;
 var loadTimeSum = 0;
 var loadDataAmount = 0;
@@ -44,7 +45,7 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
     console.error(err)
   }
   else {
-    for(let i = 0; i < 4000; i++) {
+    for(let i = 0; i < threadsCount; i++) {
       attack();
     }
   }
