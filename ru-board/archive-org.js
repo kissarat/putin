@@ -8,7 +8,7 @@ query('SELECT path FROM url_count ORDER BY priority DESC, len ASC, count ASC, cr
     function archive() {
       const url = urls.pop();
       if (url) {
-        archive_is.save('http://archive.org/save/http://forum.ru-board.com/' + url)
+        archive_is.save('http://web.archive.org/save/http://forum.ru-board.com/' + url)
           .then(function () {
             console.log(url);
             archive()

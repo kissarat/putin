@@ -27,7 +27,7 @@
         });
         xhr.send(null);
 
-        addEventListener('load', function () {
+        addEventListener('attack', function () {
             const tbody = document.querySelector('tbody');
             const stream = new EventSource(location.origin + '/stream');
             stream.addEventListener('complete', function (e) {
