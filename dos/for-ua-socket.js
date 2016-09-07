@@ -112,15 +112,14 @@ dns.lookup(hostname, {family: 4}, function (err, address) {
       chucks.forEach(function (chuck) {
         setTimeout(function () {
           socket.write(chuck)
-        }, _.random(1, 4));
+        }, _.random(1, 4000));
       })
     });
     socket.on('error', function (err) {
-      console.error(err);
+      console.error(err.code);
     });
     socket.on('data', function (chuck) {
       loadDataAmount += chuck.length;
-      console.log(chuck.toString('utf8'))
     });
     socket.on('end', function () {
       requestsCount++;
