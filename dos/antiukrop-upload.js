@@ -5,10 +5,11 @@ const _ = require('underscore');
 
 const images = [
   'https://cont.ws/uploads/pic/2015/12/123859.jpg',
-  'http://www.forumdaily.com/wp-content/uploads/2016/04/140226-putin-russia-military-750a_4eeedb96f23edfb4cd42615d86323da2_0.jpg',
-  'http://www.anu.edu.au/files/event/PUTIN_RUSO.jpg',
-  'http://www.trbimg.com/img-531e3b37/turbine/la-oe-gessen-putin-russia-ukraine-20140311',
-  'http://static.politico.com/e1/6b/a032e9ce448dac28423bf01fc9b7/putin-getty.jpg'
+  'http://dfpays.com/imagecache/g1264-ValentinJD-2D/main.jpg',
+  'http://redixxmen.com/wp-content/uploads/2015/11/DSC_0342.jpg',
+  // 'http://static.yuvutu.com/prod-live/gallery/images/53/61/D4B30DAE_8885_8356_DDF9_5C2167934622.jpg',
+  'http://1gays.net/wp-content/uploads/2015/10/solo-twink-sporty-dildo.jpg',
+  'http://www.manhuntdaily.com/files/2014/12/Anthony-gets-fucked-by-Cole-and-Hunter-in-a-bareback-threesome-for-gay-porn-site-Maverick-Men-5.jpg'
 ];
 
 const headers = {
@@ -100,7 +101,7 @@ const fileFieldNames = [
 function send() {
   return loadSendPage()
     .then(function (page) {
-      _.shuffle(fileFieldNames).forEach(function (name, i) {
+      fileFieldNames.forEach(function (name, i) {
         page.form[name] = fs.createReadStream(imageFileName(i))
       });
       page.form['submitted[last_name]'] = timeId();
@@ -156,7 +157,7 @@ function loop() {
     })
 }
 
-Promise.all(_.shuffle(images).map(downloadImage))
+Promise.all(images.map(downloadImage))
   .then(function () {
     for(let i = 0; i < 4; i++) {
       setTimeout(loop, i * 1000)
