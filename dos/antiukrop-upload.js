@@ -7,7 +7,6 @@ const images = [
   'https://cont.ws/uploads/pic/2015/12/123859.jpg',
   'http://dfpays.com/imagecache/g1264-ValentinJD-2D/main.jpg',
   'http://redixxmen.com/wp-content/uploads/2015/11/DSC_0342.jpg',
-  // 'http://static.yuvutu.com/prod-live/gallery/images/53/61/D4B30DAE_8885_8356_DDF9_5C2167934622.jpg',
   'http://1gays.net/wp-content/uploads/2015/10/solo-twink-sporty-dildo.jpg',
   'http://www.manhuntdaily.com/files/2014/12/Anthony-gets-fucked-by-Cole-and-Hunter-in-a-bareback-threesome-for-gay-porn-site-Maverick-Men-5.jpg'
 ];

