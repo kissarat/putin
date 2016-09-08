@@ -22,7 +22,9 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
     const start = Date.now();
     const socket = new net.Socket();
     socket.on('connect', function () {
-      socket.write(createRequest(_url.path.replace('{number}', _.random(1, maxNumber))))
+      const number = _.random(1, maxNumber);
+      const data = createRequest(_url.path.replace(/number/g, number.toString(10)));
+      socket.write(data)
     });
     socket.on('error', function (err) {
       console.error(err.code);
