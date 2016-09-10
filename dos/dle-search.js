@@ -3,7 +3,7 @@ const fs = require('fs');
 const qs = require('querystring');
 const _ = require('underscore');
 
-const _url = +process.argv[process.argv.length - 2];
+const _url = process.argv[process.argv.length - 2];
 const threadsCount = +process.argv[process.argv.length - 1];
 
 const headers = {
