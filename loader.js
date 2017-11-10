@@ -72,6 +72,7 @@ function save(thread) {
             .then(function (data) {
                 data.number = i;
                 data.spend = (Date.now() - start) / 1000;
+
                 show(data);
                 save(thread);
             })

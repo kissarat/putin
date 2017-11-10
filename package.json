@@ -17,15 +17,15 @@
   },
   "homepage": "https://github.com/kissarat/putin#readme",
   "dependencies": {
-    "archive.is": "git+ssh://git@github.com:kissarat/archive.is.git",
+    "archive.is": "0.0.2",
     "colors": "^1.1.2",
     "deepmerge": "^0.2.10",
-    "iconv": "^2.2.1",
-    "iconv-lite": "^0.4.13",
-    "jsdom": "^9.4.2",
-    "pg": "^6.1.0",
+    "iconv": "^2.3.0",
+    "iconv-lite": "^0.4.19",
+    "jsdom": "^9.12.0",
+    "pg": "^6.4.2",
     "progress": "^1.1.8",
-    "request": "^2.74.0",
+    "request": "^2.83.0",
     "underscore": "^1.8.3"
   }
 }

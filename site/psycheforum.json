@@ -1,0 +1,8 @@
+{
+	"url": "https://psycheforum.ru/topic{number}.html",
+	"number": 128772,
+	"threads": 8,
+	"host": "localhost",
+	"port": 9001,
+	"min": 1
+}
