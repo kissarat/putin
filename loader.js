@@ -10,6 +10,8 @@ const fs = require('fs');
 const http = require('http');
 const url = require('url');
 
+process.title = 'putin'
+
 if ('number' === (typeof config.port) && !config.host) {
     config.host = 'localhost';
 }
