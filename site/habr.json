@@ -1,6 +1,5 @@
 {
-  "url": "https://habr.com/post/{number}/",
-  "number": 416800,
-  "threads": 24,
-  "port": 9001
+	"url": "https://habr.com/post/{number}/",
+	"number": 331776,
+	"threads": 6
 }
