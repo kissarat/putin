@@ -18,14 +18,14 @@
   "homepage": "https://github.com/kissarat/putin#readme",
   "dependencies": {
     "archive.is": "0.0.2",
-    "colors": "^1.1.2",
-    "deepmerge": "^2.1.1",
-    "iconv": "^2.3.5",
-    "iconv-lite": "^0.4.19",
-    "jsdom": "^11.12.0",
-    "pg": "^7.4.3",
+    "colors": "^1.4.0",
+    "deepmerge": "^4.2.2",
+    "iconv": "^3.0.1",
+    "iconv-lite": "^0.6.3",
+    "jsdom": "^20.0.0",
+    "pg": "^8.7.3",
     "progress": "^2.0.0",
-    "request": "^2.83.0",
-    "underscore": "^1.8.3"
+    "request": "^2.88.2",
+    "underscore": "^1.13.4"
   }
 }
